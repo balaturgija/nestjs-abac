@@ -1,0 +1,28 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+      target: nestjs-abac
+    env_file: .env.local
+    command: yarn start:debug
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+      - 9229:9229
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./test:/usr/src/app/test
+  db:
+    image: 'postgres:16.2'
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=AbacDb
+      - POSTGRES_PASSWORD=Radim1Puno2
+    volumes:
+      - ./docker/postgres:/docker-entrypoint-initdb.d
+      - pgdata-nestjs-abac:/var/lib/postgresql/data
+volumes:
+  pgdata-nestjs-abac:

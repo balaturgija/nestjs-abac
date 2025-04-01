@@ -1,0 +1,5 @@
+FROM node:lts-alpine AS nestjs-abac
+WORKDIR /usr/src/app
+COPY package*.json .
+RUN yarn install --frozen-lockfile
+COPY . .
