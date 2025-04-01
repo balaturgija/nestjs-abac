@@ -1,5 +1,10 @@
 import { ConfigService } from '@nestjs/config';
 import { Sequelize } from 'sequelize-typescript';
+import { AccountRole } from 'src/accounts/models/entities/account-role.entity';
+import { Account } from 'src/accounts/models/entities/account.entity';
+import { OrganizationResource } from 'src/organizations/models/entities/organization-resource.entity';
+import { Organization } from 'src/organizations/models/entities/organization.entity';
+import { Role } from 'src/roles/models/entities/role.entity';
 
 export const databaseProviders = [
   {
@@ -13,7 +18,7 @@ export const databaseProviders = [
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
         minifyAliases: true,
-        models: [],
+        models: [Account, AccountRole, Role, Organization, OrganizationResource],
       });
 
       try {
